@@ -1,15 +1,19 @@
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import Header from './components/Header';
 import './App.css';
-import Body from './components/Body';
-import Footer from './components/Footer';
+import NotesPages from './pages/NotesPages';
+import Note from './pages/Note';
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Body />
-      <Footer />
-    </div>
+    <Router>
+      <div className="App">
+        <Header />
+        <Route component={NotesPages} path="/" exact />
+        <Route component={Note} path="/note/:id" />
+      </div>
+    </Router>
   );
 }
 
