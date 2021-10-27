@@ -8,10 +8,12 @@ import Note from './pages/Note';
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Header />
-        <Route component={NotesPages} path="/" exact />
-        <Route component={Note} path="/note/:id" />
+      <div className="container dark">
+        <div className="app">
+          <Header />
+          <Route component={NotesPages} path="/" exact />
+          <Route component={Note} path="/note/:id" />
+        </div>
       </div>
     </Router>
   );
