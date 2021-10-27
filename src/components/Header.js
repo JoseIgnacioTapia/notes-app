@@ -1,8 +1,10 @@
+import AppHeader from './HeaderStyles';
+
 const Header = () => {
   return (
-    <div className="app-header">
+    <AppHeader>
       <h1>Notes List</h1>
-    </div>
+    </AppHeader>
   );
 };
 
