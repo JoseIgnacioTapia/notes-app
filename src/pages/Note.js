@@ -11,6 +11,8 @@ const Note = ({ match, history }) => {
 
   useEffect(() => {
     const getNote = async () => {
+      if (noteID === 'new') return;
+
       const response = await fetch(`http://localhost:5000/notes/${noteID}`);
       const data = await response.json();
 
@@ -25,6 +27,16 @@ const Note = ({ match, history }) => {
     setNote({ ...note, body: e.target.value });
   };
 
+  const createNote = async () => {
+    await fetch(`http://localhost:5000/notes/`, {
+      method: 'POST',
+      body: JSON.stringify({ ...note, updated: new Date() }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  };
+
   const updateNote = async () => {
     await fetch(`http://localhost:5000/notes/${noteID}`, {
       method: 'PUT',
@@ -35,8 +47,26 @@ const Note = ({ match, history }) => {
     });
   };
 
+  const deleteNote = async () => {
+    await fetch(`http://localhost:5000/notes/${noteID}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    history.push('/');
+  };
+
   const submitHandler = () => {
-    updateNote();
+    if (noteID !== 'new' && !note.body) {
+      deleteNote();
+    } else if (noteID !== 'new') {
+      updateNote();
+    } else if (noteID === 'new' && note !== null) {
+      createNote();
+    }
+
     history.push('/');
   };
 
@@ -48,6 +78,12 @@ const Note = ({ match, history }) => {
             <ArrowLeft onClick={submitHandler} />
           </Link>
         </h3>
+
+        {noteID !== 'new' ? (
+          <button onClick={deleteNote}>Delete</button>
+        ) : (
+          <button onClick={submitHandler}>Done</button>
+        )}
       </NoteHeader>
       <textarea onChange={changeValueHandler} value={note?.body}></textarea>{' '}
       {/* Show if  exist the element note */}
