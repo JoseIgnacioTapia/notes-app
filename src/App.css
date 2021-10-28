@@ -160,7 +160,7 @@ a {
   color: var(--color-light);
 } */
 
-.floating-button {
+/* .floating-button {
   font-size: 48px;
   position: absolute;
   bottom: 24px;
@@ -179,7 +179,7 @@ a {
 
 .floating-button > svg {
   fill: var(--color-bg);
-}
+} */
 
 /*==============================
 =>  Note Styles
