@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, history } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '../assets/arrow-left.svg';
 
 import { NoteContainer, NoteHeader } from './NotesStyles';
@@ -60,6 +60,7 @@ const Note = ({ match, history }) => {
       `https://notes-app-d2000-default-rtdb.firebaseio.com/notes/${noteID}.json`,
       {
         method: 'DELETE',
+        body: JSON.stringify(note),
         headers: {
           'Content-Type': 'application/json',
         },

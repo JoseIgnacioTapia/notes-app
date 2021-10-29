@@ -11,8 +11,8 @@ function App() {
       <div className="container dark">
         <div className="app">
           <Header />
-          <Route component={NotesPages} path="/" exact />
-          <Route component={Note} path="/note/:id" />
+          <Route path="/" exact component={NotesPages} />
+          <Route path="/:id" component={Note} />
         </div>
       </div>
     </Router>
