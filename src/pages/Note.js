@@ -13,7 +13,9 @@ const Note = ({ match, history }) => {
     const getNote = async () => {
       if (noteID === 'new') return;
 
-      const response = await fetch(`http://localhost:5000/notes/${noteID}`);
+      const response = await fetch(
+        `https://notes-app-d2000-default-rtdb.firebaseio.com/notes/${noteID}.json`
+      );
       const data = await response.json();
 
       console.log(data);
@@ -28,32 +30,41 @@ const Note = ({ match, history }) => {
   };
 
   const createNote = async () => {
-    await fetch(`http://localhost:5000/notes/`, {
-      method: 'POST',
-      body: JSON.stringify({ ...note, updated: new Date() }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    await fetch(
+      `https://notes-app-d2000-default-rtdb.firebaseio.com/notes.json`,
+      {
+        method: 'POST',
+        body: JSON.stringify({ ...note, updated: new Date() }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
   };
 
   const updateNote = async () => {
-    await fetch(`http://localhost:5000/notes/${noteID}`, {
-      method: 'PUT',
-      body: JSON.stringify({ ...note, updated: new Date() }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    await fetch(
+      `https://notes-app-d2000-default-rtdb.firebaseio.com/notes/${noteID}.json`,
+      {
+        method: 'PUT',
+        body: JSON.stringify({ ...note, updated: new Date() }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
   };
 
   const deleteNote = async () => {
-    await fetch(`http://localhost:5000/notes/${noteID}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    await fetch(
+      `https://notes-app-d2000-default-rtdb.firebaseio.com/notes/${noteID}.json`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     history.push('/');
   };
