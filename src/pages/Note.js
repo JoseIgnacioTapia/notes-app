@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, history } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '../assets/arrow-left.svg';
 
 import { NoteContainer, NoteHeader } from './NotesStyles';
@@ -22,10 +22,6 @@ const Note = ({ match, history }) => {
 
     getNote();
   }, [noteID]);
-
-  const changeValueHandler = e => {
-    setNote({ ...note, body: e.target.value });
-  };
 
   const createNote = async () => {
     await fetch(`http://localhost:5000/notes/`, {
@@ -50,12 +46,17 @@ const Note = ({ match, history }) => {
   const deleteNote = async () => {
     await fetch(`http://localhost:5000/notes/${noteID}`, {
       method: 'DELETE',
+      body: JSON.stringify(note),
       headers: {
         'Content-Type': 'application/json',
       },
     });
 
     history.push('/');
+  };
+
+  const changeValueHandler = e => {
+    setNote({ ...note, body: e.target.value });
   };
 
   const submitHandler = () => {
