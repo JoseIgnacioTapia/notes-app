@@ -4,6 +4,9 @@ export const NotesContext = createContext();
 
 const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
+
+  const [note, setNote] = useState(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
 
@@ -42,8 +45,27 @@ const NotesProvider = ({ children }) => {
     });
   }, [urlGET]);
 
+  const getNote = async noteID => {
+    try {
+      const response = await fetch(
+        `https://notes-app-d2000-default-rtdb.firebaseio.com/notes/${noteID}.json`
+      );
+
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
+
+      const data = await response.json();
+      setNote(data);
+    } catch (error) {
+      setHttpError(error.message);
+    }
+  };
+
   return (
-    <NotesContext.Provider value={{ notes, isLoading, httpError }}>
+    <NotesContext.Provider
+      value={{ notes, note, isLoading, httpError, getNote }}
+    >
       {children}
     </NotesContext.Provider>
   );

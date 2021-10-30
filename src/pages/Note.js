@@ -1,29 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { NotesContext } from '../context/NotesContext';
 import { Link } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from '../assets/arrow-left.svg';
 
 import { NoteContainer, NoteHeader } from './NotesStyles';
 
 const Note = ({ match, history }) => {
+  const { note, setNote } = useContext(NotesContext);
   let noteID = match.params.id;
-
-  const [note, setNote] = useState(null);
-
-  useEffect(() => {
-    const getNote = async () => {
-      if (noteID === 'new') return;
-
-      const response = await fetch(
-        `https://notes-app-d2000-default-rtdb.firebaseio.com/notes/${noteID}.json`
-      );
-      const data = await response.json();
-
-      console.log(data);
-      setNote(data);
-    };
-
-    getNote();
-  }, [noteID]);
 
   const createNote = async () => {
     await fetch(
