@@ -8,15 +8,27 @@ const NotesPages = () => {
 
   useEffect(() => {
     const getNotes = async () => {
-      const response = await fetch('http://localhost:5000/notes');
+      const response = await fetch(
+        'https://notes-app-d2000-default-rtdb.firebaseio.com/notes.json'
+      );
       const data = await response.json();
 
-      console.log(data);
-      setNotes(data);
+      const loadedNotes = [];
+
+      for (const key in data) {
+        loadedNotes.push({
+          id: key,
+          body: data[key].body,
+          updated: data[key].updated,
+        });
+      }
+
+      setNotes(loadedNotes);
     };
 
     getNotes();
   }, []);
+  console.log(notes);
 
   return (
     <div>
