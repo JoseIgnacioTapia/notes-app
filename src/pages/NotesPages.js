@@ -1,34 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { NotesContext } from '../context/NotesContext';
 import ListItem from '../components/ListItem';
 import { NotesHeader, NotesList } from './NotesStyles.js';
 import AddButton from '../components/AddButton';
+import MessageState from './Messages';
 
 const NotesPages = () => {
-  const [notes, setNotes] = useState([]);
+  const { notes, isLoading, httpError } = useContext(NotesContext);
 
-  useEffect(() => {
-    const getNotes = async () => {
-      const response = await fetch(
-        'https://notes-app-d2000-default-rtdb.firebaseio.com/notes.json'
-      );
-      const data = await response.json();
+  if (isLoading) {
+    return (
+      <MessageState>
+        <p>Loading. . .</p>
+      </MessageState>
+    );
+  }
 
-      const loadedNotes = [];
-
-      for (const key in data) {
-        loadedNotes.push({
-          id: key,
-          body: data[key].body,
-          updated: data[key].updated,
-        });
-      }
-
-      setNotes(loadedNotes);
-    };
-
-    getNotes();
-  }, []);
-  console.log(notes);
+  if (httpError) {
+    return (
+      <MessageState error>
+        <p>{httpError} 🤨</p>
+      </MessageState>
+    );
+  }
 
   return (
     <div>
