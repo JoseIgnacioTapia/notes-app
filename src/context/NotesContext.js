@@ -83,7 +83,7 @@ const NotesProvider = ({ children }) => {
         throw new Error('Something went wrong' + response.data);
       }
 
-      const data = response.json();
+      // const data = response.json();
       setIsSubmitting(false);
       setDidSubmit(true);
     } catch (error) {
@@ -111,7 +111,7 @@ const NotesProvider = ({ children }) => {
         throw new Error('Something went wrong!');
       }
 
-      const data = response.json();
+      // const data = response.json();
       setDidSubmit(true);
       setIsSubmitting(false);
     } catch (error) {
@@ -141,7 +141,7 @@ const NotesProvider = ({ children }) => {
         throw new Error('Something went wrong!');
       }
 
-      const data = response.json();
+      // const data = response.json();
       setDidSubmit(true);
       setIsSubmitting(false);
     } catch (error) {
